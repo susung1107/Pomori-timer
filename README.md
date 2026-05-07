@@ -5,7 +5,7 @@
 
 ## 데모
 
-[https://pomori.example.com](https://pomori.susung1107.workers.dev/)
+[포모리 보러가기](https://pomori.susung1107.workers.dev/)
 
 ## 주요 기능
 
