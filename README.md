@@ -5,7 +5,7 @@
 
 ## 데모
 
-https://pomori.example.com  <!-- 배포 후 실제 URL로 교체 -->
+[https://pomori.example.com](https://pomori.susung1107.workers.dev/)
 
 ## 주요 기능
 
