@@ -1,0 +1,138 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.viewport {
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+  cursor: grab;
+}
+
+.viewport:active {
+  cursor: grabbing;
+}
+
+.track {
+  display: flex;
+  width: 100%;
+  will-change: transform;
+}
+
+.slide {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 12px 8px;
+  gap: 16px;
+}
+
+.iconWrap {
+  width: 88px;
+  height: 88px;
+  border-radius: 28px;
+  background: var(--bg-soft-accent);
+  color: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.body {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 320px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.dot {
+  appearance: none;
+  border: none;
+  background: var(--bg-elevated);
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  padding: 0;
+  cursor: pointer;
+  transition: background 200ms ease-out, width 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dotActive {
+  background: var(--brand);
+  width: 22px;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.btn {
+  flex: 1;
+  appearance: none;
+  border: none;
+  height: 52px;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 150ms ease-out, transform 150ms ease-out, color 150ms ease-out;
+}
+
+.btn:active {
+  transform: scale(0.98);
+  transition: transform 80ms ease-out;
+}
+
+.btnPrimary {
+  background: var(--brand);
+  color: #ffffff;
+}
+
+.btnPrimary:hover {
+  background: var(--brand-hover);
+}
+
+.btnSecondary {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.btnSecondary:hover {
+  background: var(--bg-elevated-hover);
+}
+
+.btnGhost {
+  background: transparent;
+  color: var(--text-tertiary);
+}
+
+.btnGhost:hover {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}

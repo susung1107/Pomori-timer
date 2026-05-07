@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <title>Pomori — 25분 집중 타이머</title>
+    <meta
+      name="description"
+      content="집중과 휴식을 25분 단위로 끊어가는 포모도로 타이머. 작업 큐, 풀스크린 포커스 모드, 다크 모드를 지원합니다."
+    />
+    <meta name="theme-color" content="#F9FAFB" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1217" media="(prefers-color-scheme: dark)" />
+    <meta name="application-name" content="Pomori" />
+    <meta name="apple-mobile-web-app-title" content="Pomori" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/notification-icon.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pomori" />
+    <meta property="og:title" content="Pomori — 25분 집중 타이머" />
+    <meta
+      property="og:description"
+      content="집중과 휴식을 25분 단위로 끊어가는 포모도로 타이머. 작업 큐, 풀스크린 포커스 모드, 다크 모드 지원."
+    />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:alt" content="Pomori — 포모도로 타이머" />
+    <meta property="og:locale" content="ko_KR" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pomori — 25분 집중 타이머" />
+    <meta
+      name="twitter:description"
+      content="집중과 휴식을 25분 단위로 끊어가는 포모도로 타이머."
+    />
+    <meta name="twitter:image" content="/og-image.png" />
+
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
+    <script>
+      (function () {
+        try {
+          var raw = localStorage.getItem('pomodoro-app-v1');
+          var theme = null;
+          var accent = null;
+          if (raw) {
+            var parsed = JSON.parse(raw);
+            var s = parsed && parsed.state;
+            if (s) {
+              if (s.theme === 'dark' || s.theme === 'light') theme = s.theme;
+              if (
+                s.accent === 'blue' ||
+                s.accent === 'green' ||
+                s.accent === 'indigo' ||
+                s.accent === 'amber'
+              ) {
+                accent = s.accent;
+              }
+            }
+          }
+          // 첫 렌더 전에 속성을 세팅해야 React 트리에서 에러가 나도
+          // ErrorBoundary 폴백 UI가 사용자 테마/컬러대로 표시됨.
+          document.documentElement.setAttribute('data-theme', theme || 'light');
+          document.documentElement.setAttribute('data-accent', accent || 'blue');
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.setAttribute('data-accent', 'blue');
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-DRt9HZii.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-ByXjA6In.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

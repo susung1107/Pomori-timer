@@ -1,0 +1,94 @@
+.root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg-page);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 24px;
+  background: var(--bg-surface);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.iconWrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.body {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.btn {
+  flex: 1;
+  appearance: none;
+  border: none;
+  height: 48px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 150ms ease-out, transform 150ms ease-out;
+}
+
+.btn:active {
+  transform: scale(0.98);
+  transition: transform 80ms ease-out;
+}
+
+.btnPrimary {
+  background: var(--brand);
+  color: var(--text-on-brand);
+}
+
+.btnPrimary:hover {
+  background: var(--brand-hover);
+}
+
+.btnSecondary {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.btnSecondary:hover {
+  background: var(--bg-elevated-hover);
+}

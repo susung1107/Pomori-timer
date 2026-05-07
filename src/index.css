@@ -1,0 +1,203 @@
+:root {
+  /* Page & surfaces */
+  --bg-page: #f9fafb;
+  --bg-surface: #ffffff;
+  --bg-surface-soft: #f9fafb;
+  --bg-elevated: #f2f4f6;
+  --bg-elevated-hover: #e5e8eb;
+  --bg-elevated-active: #d1d6db;
+  --bg-track: #eef1f4;
+
+  /* Text */
+  --text-primary: #191f28;
+  --text-secondary: #4e5968;
+  --text-tertiary: #6b7684;
+  --text-muted: #8b95a1;
+  --text-faint: #b0b8c1;
+  --text-on-brand: #ffffff;
+  --text-disabled: #c6cdd6;
+
+  --brand-disabled: #c6cdd6;
+
+  /* Danger */
+  --danger: #f04452;
+  --danger-soft: #fff0f0;
+  --danger-active: #d63340;
+  --danger-active-bg: #ffd9dc;
+
+  /* Borders */
+  --border-subtle: #f2f4f6;
+  --border-input: #e5e8eb;
+
+  /* Shadows / overlays */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-segment: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --backdrop: rgba(15, 19, 25, 0.45);
+}
+
+[data-theme='dark'] {
+  --bg-page: #0e1217;
+  --bg-surface: #181d24;
+  --bg-surface-soft: #20262e;
+  --bg-elevated: #2a313a;
+  --bg-elevated-hover: #353c46;
+  --bg-elevated-active: #4e5968;
+  --bg-track: #2a313a;
+
+  --text-primary: #eceef0;
+  --text-secondary: #b6bdc6;
+  --text-tertiary: #8b95a1;
+  --text-muted: #6b7684;
+  --text-faint: #4e5968;
+  --text-on-brand: #ffffff;
+  --text-disabled: #4e5968;
+
+  --brand-disabled: #353c46;
+
+  --danger: #ff6470;
+  --danger-soft: #3a1f22;
+  --danger-active: #ff7e89;
+  --danger-active-bg: #4a2024;
+
+  --border-subtle: #2a313a;
+  --border-input: #353c46;
+
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-segment: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --backdrop: rgba(0, 0, 0, 0.6);
+}
+
+/* === Accent themes (brand color variants) === */
+
+/* Blue (default) */
+:root,
+[data-accent='blue'] {
+  --brand: #3182f6;
+  --brand-light: #5ba0ff;
+  --brand-hover: #1b64da;
+  --brand-active: #1456b8;
+  --bg-input-focus: #e8f3ff;
+  --bg-soft-accent: #e8f3ff;
+  --shadow-clock: 0 10px 32px rgba(49, 130, 246, 0.16);
+}
+[data-theme='dark'][data-accent='blue'] {
+  --brand: #4d9dff;
+  --brand-light: #7ab6ff;
+  --brand-hover: #6bafff;
+  --brand-active: #82bcff;
+  --bg-input-focus: #1a2b43;
+  --bg-soft-accent: #1a2b43;
+  --shadow-clock: 0 10px 36px rgba(77, 157, 255, 0.22);
+}
+
+/* Green (sage) — 시각 회복, 눈에 가장 편함 */
+[data-accent='green'] {
+  --brand: #10b981;
+  --brand-light: #34d399;
+  --brand-hover: #059669;
+  --brand-active: #047857;
+  --bg-input-focus: #d1fae5;
+  --bg-soft-accent: #d1fae5;
+  --shadow-clock: 0 10px 32px rgba(16, 185, 129, 0.16);
+}
+[data-theme='dark'][data-accent='green'] {
+  --brand: #34d399;
+  --brand-light: #6ee7b7;
+  --brand-hover: #6ee7b7;
+  --brand-active: #a7f3d0;
+  --bg-input-focus: #103a2c;
+  --bg-soft-accent: #103a2c;
+  --shadow-clock: 0 10px 36px rgba(52, 211, 153, 0.22);
+}
+
+/* Indigo — 창의·집중 */
+[data-accent='indigo'] {
+  --brand: #6366f1;
+  --brand-light: #818cf8;
+  --brand-hover: #4f46e5;
+  --brand-active: #4338ca;
+  --bg-input-focus: #e0e7ff;
+  --bg-soft-accent: #e0e7ff;
+  --shadow-clock: 0 10px 32px rgba(99, 102, 241, 0.18);
+}
+[data-theme='dark'][data-accent='indigo'] {
+  --brand: #818cf8;
+  --brand-light: #a5b4fc;
+  --brand-hover: #a5b4fc;
+  --brand-active: #c7d2fe;
+  --bg-input-focus: #2a2660;
+  --bg-soft-accent: #2a2660;
+  --shadow-clock: 0 10px 36px rgba(129, 140, 248, 0.24);
+}
+
+/* Amber — 따뜻한 저자극, 블루라이트 적음 */
+[data-accent='amber'] {
+  --brand: #f59e0b;
+  --brand-light: #fbbf24;
+  --brand-hover: #d97706;
+  --brand-active: #b45309;
+  --bg-input-focus: #fef3c7;
+  --bg-soft-accent: #fef3c7;
+  --shadow-clock: 0 10px 32px rgba(245, 158, 11, 0.18);
+}
+[data-theme='dark'][data-accent='amber'] {
+  --brand: #fbbf24;
+  --brand-light: #fcd34d;
+  --brand-hover: #fcd34d;
+  --brand-active: #fde68a;
+  --bg-input-focus: #3a2c0a;
+  --bg-soft-accent: #3a2c0a;
+  --shadow-clock: 0 10px 36px rgba(251, 191, 36, 0.22);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  background: var(--bg-page);
+}
+
+body {
+  font-family:
+    'Pretendard Variable',
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    'Segoe UI',
+    'Apple SD Gothic Neo',
+    'Noto Sans KR',
+    Roboto,
+    sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 250ms ease-out, color 250ms ease-out;
+}
+
+button {
+  font-family: inherit;
+  touch-action: manipulation;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: 16px; /* iOS focus zoom 방지 */
+}

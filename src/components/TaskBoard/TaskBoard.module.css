@@ -1,0 +1,466 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--bg-surface);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.count {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  background: var(--bg-elevated);
+  padding: 2px 10px;
+  border-radius: 999px;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* === Add input === */
+
+.inputRow {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  height: 44px;
+  border: none;
+  outline: none;
+  background: var(--bg-elevated);
+  border-radius: 12px;
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--text-primary);
+  transition: background 150ms ease-out;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus {
+  background: var(--bg-input-focus);
+}
+
+.addButton {
+  height: 44px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 12px;
+  background: var(--brand);
+  color: var(--text-on-brand);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 150ms ease-out, background 150ms ease-out;
+}
+
+.addButton:hover:not(:disabled) {
+  background: var(--brand-hover);
+}
+
+.addButton:active:not(:disabled) {
+  background: var(--brand-active);
+  transform: scale(0.96);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+.addButton:disabled {
+  background: var(--brand-disabled);
+  cursor: not-allowed;
+}
+
+/* === List === */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  background: var(--bg-surface-soft);
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  transition: opacity 240ms ease-out, transform 240ms ease-out, background 200ms ease-out, border-color 200ms ease-out;
+  will-change: opacity, transform;
+}
+
+@media (min-width: 768px) {
+  .row {
+    padding: 12px 14px;
+    border-radius: 12px;
+  }
+}
+
+.rowRemoving {
+  opacity: 0;
+  transform: translateX(40px) scale(0.96);
+  pointer-events: none;
+}
+
+.rowCurrent {
+  background: var(--bg-soft-accent);
+  border-color: var(--brand);
+  padding: 18px 16px;
+}
+
+@media (min-width: 768px) {
+  .rowCurrent {
+    padding: 18px 16px;
+  }
+}
+
+.rowBreak {
+  background: var(--bg-elevated);
+  border-color: var(--border-input);
+}
+
+.rowCelebration {
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px;
+  background: var(--bg-soft-accent);
+  border-color: var(--brand);
+  animation: celebrationFade 1400ms ease-out forwards;
+}
+
+/* === Drag handle === */
+
+.dragHandle {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-faint);
+  padding: 10px 8px;
+  margin: -6px -4px;
+  border-radius: 8px;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  transition: color 150ms ease-out, transform 150ms ease-out;
+  flex-shrink: 0;
+}
+
+.dragHandle:hover {
+  color: var(--text-tertiary);
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+  transform: scale(0.94);
+  transition: transform 80ms ease-out;
+}
+
+.dragHandlePlaceholder {
+  width: 16px;
+  flex-shrink: 0;
+}
+
+/* === Index / status indicator === */
+
+.index {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.indexCurrent {
+  color: var(--brand);
+  font-size: 14px;
+}
+
+/* === Row main (badge + title stacked) === */
+
+.rowMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* === Status badge === */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  margin-bottom: 2px;
+}
+
+.badgeRunning {
+  background: var(--brand);
+  color: var(--text-on-brand);
+}
+
+.badgeRunning .badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.badgePaused {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.badgeBreak {
+  background: var(--bg-elevated);
+  color: var(--text-tertiary);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* === Title / edit input === */
+
+.title {
+  flex: 1;
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 4px 0;
+  text-align: left;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: text;
+  word-break: break-word;
+  transition: color 150ms ease-out;
+  min-height: 28px;
+  line-height: 1.4;
+}
+
+.title:hover:not(:disabled) {
+  color: var(--brand);
+}
+
+.titleCurrent {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.titleInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: var(--bg-surface);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.titleInputCurrent {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* === Remove button === */
+
+.removeButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-faint);
+  font-size: 22px;
+  font-weight: 400;
+  cursor: pointer;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: background 150ms ease-out, color 150ms ease-out, transform 150ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .removeButton {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    font-size: 20px;
+  }
+}
+
+.removeButton:hover:not(:disabled) {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.removeButton:active:not(:disabled) {
+  background: var(--danger-active-bg);
+  color: var(--danger-active);
+  transform: scale(0.92);
+  transition: transform 80ms ease-out, background 80ms ease-out, color 80ms ease-out;
+}
+
+.removeButtonPlaceholder {
+  width: 36px;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .removeButtonPlaceholder {
+    width: 28px;
+  }
+}
+
+/* === Empty state === */
+
+.empty {
+  margin: 0;
+  padding: 24px 0 8px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  list-style: none;
+}
+
+/* === Show-all (compact mode) === */
+
+.showAllButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  padding: 8px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms ease-out, color 150ms ease-out;
+}
+
+.showAllButton:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+/* === Celebration === */
+
+.checkSvg {
+  display: block;
+  animation: checkPop 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center;
+}
+
+.checkBg {
+  fill: var(--bg-soft-accent);
+}
+
+.checkPath {
+  stroke: var(--brand);
+  stroke-dasharray: 38;
+  stroke-dashoffset: 38;
+  animation: drawCheck 320ms ease-out 200ms forwards;
+}
+
+.celebrationText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.celebrationTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  word-break: break-word;
+}
+
+.celebrationLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.04em;
+}
+
+@keyframes celebrationFade {
+  0%,
+  60% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes checkPop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes drawCheck {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

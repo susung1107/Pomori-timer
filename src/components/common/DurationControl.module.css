@@ -1,0 +1,94 @@
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stepButton {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: none;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 150ms ease-out, background 150ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .stepButton {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.stepButton:hover:not(:disabled) {
+  background: var(--bg-elevated-hover);
+}
+
+.stepButton:active:not(:disabled) {
+  background: var(--bg-elevated-active);
+  transform: scale(0.94);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+.stepButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.valueButton {
+  appearance: none;
+  border: none;
+  min-width: 96px;
+  height: 44px;
+  padding: 0 16px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px var(--border-input) inset;
+  transition: background 150ms ease-out, transform 150ms ease-out, box-shadow 150ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .valueButton {
+    height: 40px;
+  }
+}
+
+.valueButton:hover:not(:disabled) {
+  background: var(--bg-elevated);
+  box-shadow: 0 0 0 1px var(--brand) inset;
+}
+
+.valueButton:active:not(:disabled) {
+  background: var(--bg-elevated-hover);
+  transform: scale(0.97);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+.valueButton:disabled {
+  cursor: not-allowed;
+  color: var(--text-muted);
+}

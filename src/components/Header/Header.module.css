@@ -1,0 +1,127 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statsButton {
+  appearance: none;
+  border: none;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  height: 44px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: transform 150ms ease-out, background 150ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .statsButton {
+    height: 40px;
+    padding: 8px 12px;
+  }
+}
+
+.statsButton:hover {
+  background: var(--bg-surface-soft);
+}
+
+.statsButton:active {
+  background: var(--bg-elevated);
+  transform: scale(0.96);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+.statsCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--bg-soft-accent);
+  color: var(--brand);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.iconButton {
+  appearance: none;
+  border: none;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-card);
+  transition: transform 150ms ease-out, background 150ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .iconButton {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.iconButton:hover {
+  background: var(--bg-surface-soft);
+}
+
+.iconButton:active {
+  background: var(--bg-elevated);
+  transform: scale(0.94);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 24px;
+  }
+  .subtitle {
+    font-size: 14px;
+  }
+}

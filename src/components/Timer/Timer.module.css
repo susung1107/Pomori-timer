@@ -1,0 +1,300 @@
+.timer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 32px 16px;
+  background: var(--bg-surface);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+}
+
+@media (min-width: 768px) {
+  .timer {
+    padding: 32px 24px;
+  }
+}
+
+.topActions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 4px;
+}
+
+@media (min-width: 768px) {
+  .topActions {
+    top: 16px;
+    right: 16px;
+  }
+}
+
+.iconToggle {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms ease-out, color 150ms ease-out, transform 150ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .iconToggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+}
+
+.iconToggle:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.iconToggle:active {
+  background: var(--bg-elevated-hover);
+  transform: scale(0.94);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+.taskLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: -0.01em;
+  text-align: center;
+  padding: 0 96px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .taskLabel {
+    font-size: 16px;
+    padding: 0 80px;
+  }
+}
+
+.phase {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--brand);
+  letter-spacing: 0.02em;
+}
+
+.phaseBreak {
+  color: var(--text-tertiary);
+}
+
+.digital {
+  display: inline-flex;
+  align-items: flex-end;
+  font-size: 80px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  line-height: 1;
+  padding: 24px 0;
+  transition: color 250ms ease-out;
+}
+
+.digitalCountdown {
+  color: var(--brand);
+}
+
+@media (min-width: 768px) {
+  .digital {
+    font-size: 120px;
+  }
+}
+
+.digitSlot {
+  display: inline-block;
+  overflow: hidden;
+  height: 1em;
+  line-height: 1;
+}
+
+.digitColumn {
+  display: block;
+  transition: transform 820ms cubic-bezier(0.4, 0, 0.6, 1);
+  will-change: transform;
+}
+
+.digitCell {
+  display: block;
+  height: 1em;
+  line-height: 1;
+}
+
+.colon {
+  display: inline-block;
+  height: 1em;
+  line-height: 1;
+  margin: 0 4px;
+}
+
+.clockWrap {
+  position: relative;
+  width: 300px;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clockSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(var(--shadow-clock));
+}
+
+.ringTrack {
+  stroke: var(--bg-track);
+  transition: stroke 250ms ease-out;
+}
+
+.gradStartActive {
+  stop-color: var(--brand-light);
+}
+
+.gradEndActive {
+  stop-color: var(--brand);
+}
+
+.gradStartBreak {
+  stop-color: var(--text-faint);
+}
+
+.gradEndBreak {
+  stop-color: var(--text-muted);
+}
+
+.clockProgress {
+  transition: stroke-dashoffset 200ms linear;
+}
+
+.clockText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.clockPhase {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.12em;
+  transition: color 250ms ease-out;
+}
+
+.clockPhaseBreak {
+  color: var(--text-tertiary);
+}
+
+.clockTextValue {
+  display: inline-flex;
+  align-items: flex-end;
+  font-size: 68px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  line-height: 1;
+  transition: color 250ms ease-out;
+}
+
+.clockTextValueCountdown {
+  color: var(--brand);
+}
+
+@media (min-width: 768px) {
+  .clockWrap {
+    width: 360px;
+    max-width: none;
+  }
+  .clockTextValue {
+    font-size: 80px;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.primaryButton {
+  flex: 1;
+  height: 52px;
+  border-radius: 12px;
+  border: none;
+  background: var(--brand);
+  color: var(--text-on-brand);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 150ms ease-out, background 150ms ease-out;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background: var(--brand-hover);
+}
+
+.primaryButton:active:not(:disabled) {
+  background: var(--brand-active);
+  transform: scale(0.96);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+.primaryButton:disabled {
+  background: var(--brand-disabled);
+  cursor: not-allowed;
+}
+
+.secondaryButton {
+  width: 96px;
+  height: 52px;
+  border-radius: 12px;
+  border: none;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 150ms ease-out, background 150ms ease-out, color 150ms ease-out;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background: var(--bg-elevated-hover);
+}
+
+.secondaryButton:active:not(:disabled) {
+  background: var(--bg-elevated-active);
+  transform: scale(0.96);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+.secondaryButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

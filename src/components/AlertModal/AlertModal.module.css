@@ -1,0 +1,74 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 4px;
+}
+
+.description {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  flex: 1;
+  appearance: none;
+  border: none;
+  height: 52px;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 150ms ease-out, transform 150ms ease-out;
+}
+
+.btn:active {
+  transform: scale(0.98);
+  transition: transform 80ms ease-out;
+}
+
+.btnSecondary {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.btnSecondary:hover {
+  background: var(--bg-elevated-hover);
+}
+
+.btnPrimary {
+  background: var(--brand);
+  color: #ffffff;
+}
+
+.btnPrimary:hover {
+  background: var(--brand-hover);
+}
+
+.btnDanger {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.btnDanger:hover {
+  background: #dc2626;
+}
+
+[data-theme='dark'] .btnDanger {
+  background: #f87171;
+  color: #1f2937;
+}
+
+[data-theme='dark'] .btnDanger:hover {
+  background: #fca5a5;
+}

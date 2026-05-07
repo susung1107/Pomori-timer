@@ -1,0 +1,133 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--backdrop);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 150ms ease-out;
+}
+
+.modal {
+  background: var(--bg-surface);
+  width: 100%;
+  max-width: 480px;
+  max-height: 88vh;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 200ms ease-out;
+}
+
+.modalFullscreen {
+  max-width: 100%;
+  max-height: 100vh;
+  height: 100dvh;
+  border-radius: 0;
+}
+
+@media (min-width: 768px) {
+  .backdrop {
+    align-items: center;
+  }
+  .modal {
+    border-radius: 20px;
+    max-height: 80vh;
+    animation: popIn 180ms ease-out;
+  }
+  .modalWide {
+    max-width: 600px;
+  }
+  .modalFullscreen {
+    max-width: 600px;
+    max-height: 80vh;
+    height: auto;
+    border-radius: 20px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 8px;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.close {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms ease-out, transform 150ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .close {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+}
+
+.close:hover {
+  background: var(--bg-elevated);
+}
+
+.close:active {
+  background: var(--bg-elevated-hover);
+  transform: scale(0.94);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+.body {
+  flex: 1;
+  padding: 12px 20px 24px;
+  overflow-y: auto;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

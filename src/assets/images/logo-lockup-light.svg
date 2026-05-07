@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="64" viewBox="0 0 280 64" fill="none">
+  <circle cx="32" cy="32" r="24" stroke="rgba(11,14,20,0.15)" stroke-width="6"></circle>
+  <path d="M 32 8 A 24 24 0 0 1 56 32" stroke="#3B7FE8" stroke-width="6" stroke-linecap="round"></path>
+  <text x="76" y="44" font-family="Pretendard, &#39;Apple SD Gothic Neo&#39;, system-ui, sans-serif" font-weight="800" font-size="34" letter-spacing="-0.7" fill="#0B0E14">뽀모도로</text>
+</svg>

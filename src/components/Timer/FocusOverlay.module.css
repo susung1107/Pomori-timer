@@ -1,0 +1,226 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+  animation: focusFadeIn 220ms ease-out;
+}
+
+@keyframes focusFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.topBar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 4px;
+}
+
+.iconButton {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms ease-out, color 150ms ease-out, transform 150ms ease-out;
+}
+
+.iconButton:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.iconButton:active {
+  background: var(--bg-elevated-hover);
+  transform: scale(0.94);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 80px 20px 48px;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.sessionLabel {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  word-break: keep-all;
+  line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+  .sessionLabel {
+    font-size: 22px;
+  }
+}
+
+.clockBox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.digitalBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.phase {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.12em;
+}
+
+.phaseBreak {
+  color: var(--text-tertiary);
+}
+
+.digital {
+  display: inline-flex;
+  align-items: flex-end;
+  font-size: 96px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  line-height: 1;
+  transition: color 250ms ease-out;
+}
+
+.digitalCountdown {
+  color: var(--brand);
+}
+
+.colon {
+  display: inline-block;
+  height: 1em;
+  line-height: 1;
+  margin: 0 4px;
+}
+
+@media (min-width: 768px) {
+  .digital {
+    font-size: 180px;
+  }
+}
+
+.nextHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 90%;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.nextLabel {
+  font-weight: 700;
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+  font-size: 12px;
+}
+
+.nextTitle {
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60vw;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.primaryButton {
+  flex: 1;
+  height: 56px;
+  border-radius: 14px;
+  border: none;
+  background: var(--brand);
+  color: var(--text-on-brand);
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 150ms ease-out, background 150ms ease-out;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background: var(--brand-hover);
+}
+
+.primaryButton:active:not(:disabled) {
+  background: var(--brand-active);
+  transform: scale(0.96);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+.primaryButton:disabled {
+  background: var(--brand-disabled);
+  cursor: not-allowed;
+}
+
+.secondaryButton {
+  width: 104px;
+  height: 56px;
+  border-radius: 14px;
+  border: none;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 150ms ease-out, background 150ms ease-out, color 150ms ease-out;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background: var(--bg-elevated-hover);
+}
+
+.secondaryButton:active:not(:disabled) {
+  background: var(--bg-elevated-active);
+  transform: scale(0.96);
+  transition: transform 80ms ease-out, background 80ms ease-out;
+}
+
+.secondaryButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
