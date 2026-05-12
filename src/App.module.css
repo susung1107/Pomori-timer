@@ -2,7 +2,13 @@
   min-height: 100vh;
   min-height: 100dvh;
   background: var(--bg-page);
-  padding: 24px 16px 48px;
+  padding: 20px 14px 40px;
+}
+
+@media (max-width: 360px) {
+  .root {
+    padding: 16px 10px 32px;
+  }
 }
 
 .container {
@@ -10,19 +16,19 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
 }
 
 .main {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
 }
 
 .col {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
   min-width: 0;
 }
 

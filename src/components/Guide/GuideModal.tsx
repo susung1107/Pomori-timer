@@ -40,7 +40,7 @@ const SWIPE_THRESHOLD = 50;
 
 export function GuideModal({ open, onClose }: Props) {
   return (
-    <Modal open={open} onClose={onClose} title="Pomori 사용 가이드">
+    <Modal open={open} onClose={onClose} title="포모리 사용 가이드">
       <GuideContent onClose={onClose} />
     </Modal>
   );

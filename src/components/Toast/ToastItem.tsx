@@ -7,7 +7,8 @@ interface Props {
   onDismiss: () => void;
 }
 
-const EXIT_MS = 320;
+// CSS exit: 80ms delay + 360ms collapse = 440ms 정도면 자연스럽게 사라짐.
+const EXIT_MS = 440;
 
 export function ToastItem({ toast, onDismiss }: Props) {
   const [leaving, setLeaving] = useState(false);

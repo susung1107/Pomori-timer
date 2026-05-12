@@ -8,6 +8,8 @@ interface Props {
   title: string;
   children: React.ReactNode;
   size?: 'default' | 'wide' | 'fullscreen';
+  // body 영역의 기본 padding 을 제거. 자체 레이아웃(고정 푸터 등)이 필요한 경우.
+  flushBody?: boolean;
 }
 
 export function Modal({
@@ -16,6 +18,7 @@ export function Modal({
   title,
   children,
   size = 'default',
+  flushBody = false,
 }: Props) {
   useEffect(() => {
     if (!open) return;
@@ -70,7 +73,9 @@ export function Modal({
             </svg>
           </button>
         </header>
-        <div className={styles.body}>{children}</div>
+        <div className={`${styles.body} ${flushBody ? styles.bodyFlush : ''}`}>
+          {children}
+        </div>
       </div>
     </div>,
     document.body,

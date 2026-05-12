@@ -1,0 +1,402 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-page);
+}
+
+.scrollArea {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* === Section === */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.countBadge {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  background: var(--bg-elevated);
+  padding: 2px 8px;
+  border-radius: 999px;
+  min-width: 22px;
+  text-align: center;
+}
+
+.clearButton {
+  margin-left: auto;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 150ms ease-out, color 150ms ease-out;
+}
+
+.clearButton:active {
+  background: var(--danger-active-bg);
+  color: var(--danger-active);
+}
+
+/* === Current task card === */
+
+.currentCard {
+  background: var(--bg-soft-accent);
+  border: 1px solid var(--brand);
+  border-radius: 16px;
+  padding: 18px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.currentTopRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.currentTitle {
+  flex: 1;
+  appearance: none;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  word-break: break-word;
+  padding: 4px 0;
+  cursor: text;
+  min-width: 0;
+}
+
+.currentTitleInput {
+  flex: 1;
+  border: 1px solid var(--brand);
+  outline: none;
+  background: var(--bg-surface);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.015em;
+}
+
+.currentRemoveButton {
+  flex-shrink: 0;
+  appearance: none;
+  border: none;
+  background: var(--bg-surface);
+  color: var(--text-tertiary);
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms ease-out, color 150ms ease-out, transform 150ms ease-out;
+}
+
+.currentRemoveButton:active {
+  background: var(--danger-active-bg);
+  color: var(--danger-active);
+  transform: scale(0.92);
+}
+
+/* === Queue list === */
+
+.queueList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.queueRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px;
+  min-height: 60px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  transition: background 200ms ease-out, opacity 240ms ease-out, transform 240ms ease-out;
+  will-change: opacity, transform;
+}
+
+.queueRow:first-child {
+  border-top: none;
+}
+
+.queueRowRemoving {
+  opacity: 0;
+  transform: translateX(40px) scale(0.96);
+  pointer-events: none;
+}
+
+.queueDragHandle {
+  flex-shrink: 0;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-faint);
+  width: 32px;
+  height: 44px;
+  border-radius: 8px;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+
+.queueDragHandle:active {
+  cursor: grabbing;
+  background: var(--bg-elevated);
+}
+
+.queueIndex {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 18px;
+  text-align: center;
+}
+
+.queueTitle {
+  flex: 1;
+  appearance: none;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  word-break: break-word;
+  padding: 6px 0;
+  min-height: 32px;
+  cursor: text;
+  min-width: 0;
+}
+
+.queueTitleInput {
+  flex: 1;
+  border: 1px solid var(--brand);
+  outline: none;
+  background: var(--bg-page);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.queueRemoveButton {
+  flex-shrink: 0;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-faint);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms ease-out, color 150ms ease-out, transform 150ms ease-out;
+}
+
+.queueRemoveButton:active {
+  background: var(--danger-active-bg);
+  color: var(--danger-active);
+  transform: scale(0.92);
+}
+
+/* === Status badge === */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.badgeRunning {
+  background: var(--brand);
+  color: var(--text-on-brand);
+}
+
+.badgeRunning .badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.badgePaused {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.badgeIdle {
+  background: var(--bg-surface);
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-input);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* === Empty state === */
+
+.empty {
+  margin: 0;
+  padding: 28px 16px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  border: 1px dashed var(--border-input);
+  border-radius: 14px;
+}
+
+/* === Bottom sticky input === */
+
+.inputBar {
+  flex-shrink: 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.inputBarForm {
+  flex: 1;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.inputField {
+  flex: 1;
+  height: 48px;
+  border: none;
+  outline: none;
+  background: var(--bg-elevated);
+  border-radius: 12px;
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--text-primary);
+  transition: background 150ms ease-out;
+}
+
+.inputField::placeholder {
+  color: var(--text-muted);
+}
+
+.inputField:focus {
+  background: var(--bg-input-focus);
+}
+
+.inputSubmit {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: var(--brand);
+  color: var(--text-on-brand);
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms ease-out, transform 150ms ease-out;
+}
+
+.inputSubmit:active:not(:disabled) {
+  background: var(--brand-active);
+  transform: scale(0.94);
+}
+
+.inputSubmit:disabled {
+  background: var(--brand-disabled);
+  cursor: not-allowed;
+}

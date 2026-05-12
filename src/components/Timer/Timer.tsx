@@ -1,8 +1,10 @@
-import { useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { ensureNotificationPermission } from '../../lib/notification';
 import { formatMMSS, minutesToMs } from '../../lib/time';
 import { useAppStore } from '../../store/useAppStore';
+import { useToastStore } from '../../store/useToastStore';
 import { AlertModal } from '../AlertModal/AlertModal';
+import { Tooltip } from '../common/Tooltip';
 import { ClockFace } from './ClockFace';
 import { Digit } from './Digit';
 import styles from './Timer.module.css';
@@ -79,7 +81,7 @@ function ExpandIcon() {
   );
 }
 
-export function Timer({ now, onEnterFocus }: Props) {
+function TimerImpl({ now, onEnterFocus }: Props) {
   const status = useAppStore((s) => s.status);
   const workMinutes = useAppStore((s) => s.workMinutes);
   const breakMinutes = useAppStore((s) => s.breakMinutes);
@@ -95,6 +97,7 @@ export function Timer({ now, onEnterFocus }: Props) {
   const pauseTimer = useAppStore((s) => s.pauseTimer);
   const resetTimer = useAppStore((s) => s.resetTimer);
   const setDisplayMode = useAppStore((s) => s.setDisplayMode);
+  const pushToast = useToastStore((s) => s.push);
 
   const isBreakPhase = status === 'breakRunning' || status === 'break';
   const isRunningPhase = status === 'running' || status === 'breakRunning';
@@ -122,10 +125,11 @@ export function Timer({ now, onEnterFocus }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, endsAt, pausedRemainingMs, totalMs, now]);
 
+  const hasTask = currentTask != null || queueLength > 0;
   const canStart = useMemo(() => {
-    if (status === 'idle') return currentTask != null || queueLength > 0;
+    if (status === 'idle') return true;
     return status === 'paused' || status === 'break';
-  }, [status, currentTask, queueLength]);
+  }, [status]);
 
   const phaseLabel = isBreakPhase
     ? '휴식'
@@ -136,6 +140,13 @@ export function Timer({ now, onEnterFocus }: Props) {
         : '준비';
 
   const handleStart = async () => {
+    if (status === 'idle' && !hasTask) {
+      pushToast({
+        message: '먼저 할 일을 등록해주세요.',
+        tone: 'warning',
+      });
+      return;
+    }
     if (status === 'idle' && notificationsEnabled) {
       await ensureNotificationPermission();
     }
@@ -168,26 +179,36 @@ export function Timer({ now, onEnterFocus }: Props) {
   return (
     <section className={styles.timer} aria-label="타이머">
       <div className={styles.topActions}>
-        <button
-          type="button"
-          className={styles.iconToggle}
-          onClick={toggleDisplayMode}
-          aria-label={
+        <Tooltip
+          label={
             displayMode === 'clock'
               ? '타이머형으로 변경'
               : '시계형으로 변경'
           }
         >
-          {displayMode === 'clock' ? <DigitalIcon /> : <ClockIcon />}
-        </button>
-        <button
-          type="button"
-          className={styles.iconToggle}
-          onClick={onEnterFocus}
-          aria-label="포커스 모드"
-        >
-          <ExpandIcon />
-        </button>
+          <button
+            type="button"
+            className={styles.iconToggle}
+            onClick={toggleDisplayMode}
+            aria-label={
+              displayMode === 'clock'
+                ? '타이머형으로 변경'
+                : '시계형으로 변경'
+            }
+          >
+            {displayMode === 'clock' ? <DigitalIcon /> : <ClockIcon />}
+          </button>
+        </Tooltip>
+        <Tooltip label="포커스 모드">
+          <button
+            type="button"
+            className={styles.iconToggle}
+            onClick={onEnterFocus}
+            aria-label="포커스 모드"
+          >
+            <ExpandIcon />
+          </button>
+        </Tooltip>
       </div>
 
       {currentTask && !isBreakPhase && (
@@ -206,6 +227,8 @@ export function Timer({ now, onEnterFocus }: Props) {
           isBreak={isBreakPhase}
           phaseLabel={phaseLabel}
           isCountdown={isCountdown}
+          isRunning={isRunningPhase}
+          endsAt={endsAt}
         />
       ) : (
         <>
@@ -246,9 +269,11 @@ export function Timer({ now, onEnterFocus }: Props) {
         ) : (
           <button
             type="button"
-            className={styles.primaryButton}
+            className={`${styles.primaryButton} ${
+              status === 'idle' && !hasTask ? styles.primaryButtonInactive : ''
+            }`}
             onClick={handleStart}
-            disabled={!canStart}
+            disabled={status !== 'idle' && !canStart}
           >
             시작
           </button>
@@ -276,3 +301,5 @@ export function Timer({ now, onEnterFocus }: Props) {
     </section>
   );
 }
+
+export const Timer = memo(TimerImpl);

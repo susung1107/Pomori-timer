@@ -33,6 +33,36 @@
   text-align: center;
 }
 
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.clearAllButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 150ms ease-out, color 150ms ease-out;
+}
+
+.clearAllButton:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.clearAllButton:active {
+  background: var(--danger-active-bg);
+  color: var(--danger-active);
+}
+
 /* === Add input === */
 
 .inputRow {
@@ -139,11 +169,6 @@
   }
 }
 
-.rowBreak {
-  background: var(--bg-elevated);
-  border-color: var(--border-input);
-}
-
 .rowCelebration {
   flex-direction: column;
   align-items: center;
@@ -200,11 +225,6 @@
   flex-shrink: 0;
 }
 
-.indexCurrent {
-  color: var(--brand);
-  font-size: 14px;
-}
-
 /* === Row main (badge + title stacked) === */
 
 .rowMain {
@@ -220,15 +240,14 @@
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  align-self: flex-start;
-  padding: 2px 8px;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 4px 10px;
   border-radius: 999px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1.4;
-  margin-bottom: 2px;
 }
 
 .badgeRunning {
@@ -249,9 +268,10 @@
   color: var(--text-secondary);
 }
 
-.badgeBreak {
-  background: var(--bg-elevated);
+.badgeIdle {
+  background: transparent;
   color: var(--text-tertiary);
+  border: 1px solid var(--border-input);
 }
 
 @keyframes pulse {

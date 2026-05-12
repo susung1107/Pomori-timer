@@ -230,6 +230,8 @@ export function FocusOverlay({ now, onClose }: Props) {
               isBreak={isBreakPhase}
               phaseLabel={phaseLabel}
               isCountdown={isCountdown}
+              isRunning={isRunningPhase}
+              endsAt={endsAt}
               size={520}
             />
           </div>
