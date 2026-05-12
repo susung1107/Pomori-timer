@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CompletedTasksModal } from './components/CompletedTasks/CompletedTasksModal';
 import { Footer } from './components/Footer/Footer';
 import { GuideModal } from './components/Guide/GuideModal';
 import { Header } from './components/Header/Header';
+import { MobileCurrentCard } from './components/MobileCurrentCard/MobileCurrentCard';
+import { MobileTaskBoardModal } from './components/MobileTaskBoard/MobileTaskBoard';
 import { SettingsModal } from './components/Settings/SettingsModal';
-import {
-  TaskBoard,
-  TaskBoardModal,
-} from './components/TaskBoard/TaskBoard';
+import { TaskBoard } from './components/TaskBoard/TaskBoard';
 import { FocusOverlay } from './components/Timer/FocusOverlay';
 import { Timer } from './components/Timer/Timer';
 import { ToastContainer } from './components/Toast/ToastContainer';
@@ -20,16 +19,10 @@ import { useAppStore } from './store/useAppStore';
 import styles from './App.module.css';
 
 export default function App() {
-  const status = useAppStore((s) => s.status);
-  const tickActive =
-    status === 'running' ||
-    status === 'breakRunning' ||
-    status === 'paused' ||
-    status === 'break';
-  const now = useTimerTick(tickActive);
+  const now = useTimerTick();
 
   useTimerCompletion();
-  useDocumentTitle(now);
+  useDocumentTitle();
   useDailyReset();
 
   const theme = useAppStore((s) => s.theme);
@@ -57,6 +50,11 @@ export default function App() {
     if (!useAppStore.getState().hasSeenGuide) setHasSeenGuide(true);
   };
 
+  // memo'd 자식들이 prop ref 변화로 리렌더되지 않도록 콜백 안정화
+  const enterFocus = useCallback(() => setFocusOpen(true), []);
+  const closeFocus = useCallback(() => setFocusOpen(false), []);
+  const openQueue = useCallback(() => setQueueOpen(true), []);
+
   return (
     <div className={styles.root}>
       <div className={styles.container}>
@@ -68,18 +66,18 @@ export default function App() {
 
         <main className={styles.main}>
           <div className={styles.col}>
-            <Timer now={now} onEnterFocus={() => setFocusOpen(true)} />
-          </div>
-          <div className={styles.col}>
-            {isDesktop ? (
-              <TaskBoard />
-            ) : (
-              <TaskBoard
-                compact
-                onShowAll={() => setQueueOpen(true)}
-              />
+            {!focusOpen && !isDesktop && (
+              <MobileCurrentCard onOpen={openQueue} />
+            )}
+            {!focusOpen && (
+              <Timer now={now} onEnterFocus={enterFocus} />
             )}
           </div>
+          {isDesktop && (
+            <div className={styles.col}>
+              <TaskBoard />
+            </div>
+          )}
         </main>
 
         <Footer />
@@ -93,14 +91,12 @@ export default function App() {
         open={completedOpen}
         onClose={() => setCompletedOpen(false)}
       />
-      <TaskBoardModal
+      <MobileTaskBoardModal
         open={queueOpen}
         onClose={() => setQueueOpen(false)}
       />
       <GuideModal open={guideOpen} onClose={closeGuide} />
-      {focusOpen && (
-        <FocusOverlay now={now} onClose={() => setFocusOpen(false)} />
-      )}
+      {focusOpen && <FocusOverlay now={now} onClose={closeFocus} />}
       <ToastContainer />
     </div>
   );

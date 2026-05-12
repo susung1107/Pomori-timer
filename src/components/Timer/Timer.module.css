@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  padding: 32px 16px;
+  gap: 20px;
+  padding: 28px 14px;
   background: var(--bg-surface);
   border-radius: 20px;
   box-shadow: var(--shadow-card);
@@ -12,6 +12,7 @@
 
 @media (min-width: 768px) {
   .timer {
+    gap: 24px;
     padding: 32px 24px;
   }
 }
@@ -65,12 +66,13 @@
 }
 
 .taskLabel {
-  font-size: 15px;
+  display: none;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text-secondary);
   letter-spacing: -0.01em;
   text-align: center;
-  padding: 0 96px;
+  padding: 0 80px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,8 +82,7 @@
 
 @media (min-width: 768px) {
   .taskLabel {
-    font-size: 16px;
-    padding: 0 80px;
+    display: block;
   }
 }
 
@@ -99,7 +100,7 @@
 .digital {
   display: inline-flex;
   align-items: flex-end;
-  font-size: 80px;
+  font-size: clamp(56px, 18vw, 80px);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.04em;
@@ -147,8 +148,7 @@
 
 .clockWrap {
   position: relative;
-  width: 300px;
-  max-width: 100%;
+  width: min(300px, 80vw);
   aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
@@ -184,7 +184,8 @@
 }
 
 .clockProgress {
-  transition: stroke-dashoffset 200ms linear;
+  /* 진행 링은 ClockFace 의 rAF 가 inline style 로 매 프레임 직접 갱신.
+     CSS transition 은 두지 않음 — paused/idle 즉시 스냅 + running 60fps 부드러움. */
 }
 
 .clockText {
@@ -213,7 +214,7 @@
 .clockTextValue {
   display: inline-flex;
   align-items: flex-end;
-  font-size: 68px;
+  font-size: clamp(46px, 15vw, 68px);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.04em;
@@ -229,7 +230,6 @@
 @media (min-width: 768px) {
   .clockWrap {
     width: 360px;
-    max-width: none;
   }
   .clockTextValue {
     font-size: 80px;
@@ -269,6 +269,18 @@
 .primaryButton:disabled {
   background: var(--brand-disabled);
   cursor: not-allowed;
+}
+
+/* disabled 와 시각은 같지만 클릭은 받아 토스트로 안내. */
+.primaryButtonInactive {
+  background: var(--brand-disabled);
+  cursor: not-allowed;
+}
+
+.primaryButtonInactive:hover,
+.primaryButtonInactive:active {
+  background: var(--brand-disabled);
+  transform: none;
 }
 
 .secondaryButton {

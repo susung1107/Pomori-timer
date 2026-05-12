@@ -64,6 +64,7 @@ interface AppState {
   insertTask: (task: Task, index: number) => void;
   editTask: (id: string, title: string) => void;
   reorderAll: (fromId: string, toId: string) => void;
+  clearAllTasks: () => void;
   rolloverIfNewDay: () => void;
 }
 
@@ -342,8 +343,26 @@ export const useAppStore = create<AppState>()(
       },
 
       removeTask: (id) => {
-        // currentTask는 삭제하지 않고 큐 항목만 삭제
-        set((s) => ({ queue: s.queue.filter((t) => t.id !== id) }));
+        set((s) => {
+          if (s.currentTask?.id === id) {
+            // 현재 작업 삭제: 큐 첫 항목 승격, 진행 중이던 타이머는 초기화
+            let nextCurrent: Task | null = null;
+            let queue = s.queue;
+            if (queue.length > 0) {
+              nextCurrent = queue[0]!;
+              queue = queue.slice(1);
+            }
+            return {
+              currentTask: nextCurrent,
+              queue,
+              status: 'idle',
+              endsAt: null,
+              pausedRemainingMs: null,
+              currentSessionStartedAt: null,
+            };
+          }
+          return { queue: s.queue.filter((t) => t.id !== id) };
+        });
       },
 
       insertTask: (task, index) => {
@@ -400,6 +419,17 @@ export const useAppStore = create<AppState>()(
         } else {
           set({ queue: next });
         }
+      },
+
+      clearAllTasks: () => {
+        set({
+          currentTask: null,
+          queue: [],
+          status: 'idle',
+          endsAt: null,
+          pausedRemainingMs: null,
+          currentSessionStartedAt: null,
+        });
       },
 
       rolloverIfNewDay: () => {

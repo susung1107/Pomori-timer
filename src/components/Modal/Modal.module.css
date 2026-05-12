@@ -101,6 +101,11 @@
   overflow-y: auto;
 }
 
+.bodyFlush {
+  padding: 0;
+  overflow: hidden;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

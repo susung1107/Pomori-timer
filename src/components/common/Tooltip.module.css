@@ -1,0 +1,69 @@
+.wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.tooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--text-primary);
+  color: var(--bg-surface);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease;
+  transition-delay: 0ms;
+  z-index: 50;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.tooltip::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: var(--text-primary);
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 1px;
+}
+
+.wrapper:hover .tooltip,
+.wrapper:focus-within .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  transition-delay: 300ms;
+}
+
+.wrapper[data-placement='top'] .tooltip {
+  top: auto;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%) translateY(4px);
+}
+
+.wrapper[data-placement='top'] .tooltip::before {
+  top: auto;
+  bottom: -3px;
+}
+
+.wrapper[data-placement='top']:hover .tooltip,
+.wrapper[data-placement='top']:focus-within .tooltip {
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (hover: none) {
+  .tooltip {
+    display: none;
+  }
+}

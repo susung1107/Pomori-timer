@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
-import { APP_TITLE } from '../constants';
-import { formatMMSS, minutesToMs } from '../lib/time';
-import { useAppStore } from '../store/useAppStore';
+import { useEffect } from "react";
+import { APP_TITLE, VISUAL_TICK_INTERVAL_MS } from "../constants";
+import { formatMMSS, minutesToMs } from "../lib/time";
+import { useAppStore } from "../store/useAppStore";
 
 /**
  * document.title 을 "MM:SS · 할 일" 형태로 갱신.
- * 매 tick 마다 호출되도록 now를 인자로 받지만, 실제 시간은 Date.now()로 계산해
- * stale tick 으로 인한 깜빡임을 방지한다.
+ * - 상태/할 일이 바뀌면 effect 재구성하며 즉시 한 번 갱신
+ * - running/breakRunning 일 때만 자체 1초 interval 로 분/초 갱신
+ *   (App 의 tick 에 의존하지 않음 → 매 tick 마다 DOM write 없음)
  */
-export function useDocumentTitle(now: number): void {
+export function useDocumentTitle(): void {
   const status = useAppStore((s) => s.status);
   const endsAt = useAppStore((s) => s.endsAt);
   const pausedRemainingMs = useAppStore((s) => s.pausedRemainingMs);
@@ -17,27 +18,41 @@ export function useDocumentTitle(now: number): void {
   const breakMinutes = useAppStore((s) => s.breakMinutes);
 
   useEffect(() => {
-    let title = APP_TITLE;
-
-    if (status === 'running' && endsAt != null) {
-      const totalMs = minutesToMs(workMinutes);
-      const remaining = Math.max(0, Math.min(totalMs, endsAt - Date.now()));
-      title = currentTask
-        ? `${formatMMSS(remaining)} · ${currentTask.title}`
-        : `${formatMMSS(remaining)} · ${APP_TITLE}`;
-    } else if (status === 'paused' && pausedRemainingMs != null) {
-      title = currentTask
-        ? `일시정지 ${formatMMSS(pausedRemainingMs)} · ${currentTask.title}`
-        : `일시정지 ${formatMMSS(pausedRemainingMs)}`;
-    } else if (status === 'breakRunning' && endsAt != null) {
-      const totalMs = minutesToMs(Math.max(1, breakMinutes));
-      const remaining = Math.max(0, Math.min(totalMs, endsAt - Date.now()));
-      title = `휴식 ${formatMMSS(remaining)}`;
-    } else if (status === 'break' && pausedRemainingMs != null) {
-      title = `휴식 일시정지 ${formatMMSS(pausedRemainingMs)}`;
+    function compute(): string {
+      if (status === "running" && endsAt != null) {
+        const totalMs = minutesToMs(workMinutes);
+        const remaining = Math.max(0, Math.min(totalMs, endsAt - Date.now()));
+        return currentTask
+          ? `${formatMMSS(remaining)} · ${currentTask.title}`
+          : `${formatMMSS(remaining)} · ${APP_TITLE}`;
+      }
+      if (status === "paused" && pausedRemainingMs != null) {
+        return currentTask
+          ? `일시정지 ${formatMMSS(pausedRemainingMs)} · ${currentTask.title}`
+          : `일시정지 ${formatMMSS(pausedRemainingMs)}`;
+      }
+      if (status === "breakRunning" && endsAt != null) {
+        const totalMs = minutesToMs(Math.max(1, breakMinutes));
+        const remaining = Math.max(0, Math.min(totalMs, endsAt - Date.now()));
+        return `휴식 ${formatMMSS(remaining)}`;
+      }
+      if (status === "break" && pausedRemainingMs != null) {
+        return `휴식 일시정지 ${formatMMSS(pausedRemainingMs)}`;
+      }
+      return APP_TITLE;
     }
 
-    document.title = title;
+    const apply = () => {
+      const next = compute();
+      if (document.title !== next) document.title = next;
+    };
+    apply();
+
+    const isTicking = status === "running" || status === "breakRunning";
+    if (!isTicking) return;
+
+    const id = window.setInterval(apply, VISUAL_TICK_INTERVAL_MS);
+    return () => window.clearInterval(id);
   }, [
     status,
     endsAt,
@@ -45,6 +60,5 @@ export function useDocumentTitle(now: number): void {
     currentTask,
     workMinutes,
     breakMinutes,
-    now,
   ]);
 }

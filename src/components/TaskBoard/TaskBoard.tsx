@@ -16,11 +16,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { useToastStore } from '../../store/useToastStore';
 import type { Task, TimerStatus } from '../../types';
-import { Modal } from '../Modal/Modal';
+import { AlertModal } from '../AlertModal/AlertModal';
+import { Tooltip } from '../common/Tooltip';
 import styles from './TaskBoard.module.css';
 
 const REMOVE_ANIM_MS = 240;
-const COMPACT_PREVIEW_LIMIT = 3;
 const CELEBRATION_DURATION_MS = 1400;
 
 function CelebrationCheck() {
@@ -63,7 +63,7 @@ function StatusBadge({ status }: { status: TimerStatus }) {
     return (
       <span className={`${styles.badge} ${styles.badgeRunning}`}>
         <span className={styles.badgeDot} aria-hidden />
-        진행 중
+        진행중
       </span>
     );
   }
@@ -74,7 +74,8 @@ function StatusBadge({ status }: { status: TimerStatus }) {
       </span>
     );
   }
-  return null;
+  // idle (currentTask 가 있지만 시작 전): 대기
+  return <span className={`${styles.badge} ${styles.badgeIdle}`}>대기</span>;
 }
 
 function TaskAddInput() {
@@ -147,7 +148,11 @@ function TaskRow({
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(task.title);
   const [removing, setRemoving] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const isActiveCurrent =
+    isCurrent && (status === 'running' || status === 'paused');
 
   useEffect(() => {
     if (editing) {
@@ -176,10 +181,10 @@ function TaskRow({
     setEditing(false);
   };
 
-  const handleRemove = () => {
-    if (removing) return;
+  const doRemove = () => {
     const snapshot = task;
-    // 큐 내부 인덱스 (current 슬롯은 제거 불가이므로 index-1)
+    // 진행 중이던 현재 작업을 삭제하면 타이머가 리셋되므로 되돌리기 미제공.
+    // 그 외는 큐 위치(또는 currentTask 자리 → 0)로 복구.
     const queueIndex = isCurrent ? 0 : index - 1;
     setRemoving(true);
     window.setTimeout(() => {
@@ -187,12 +192,25 @@ function TaskRow({
       pushToast({
         message: '할 일을 삭제했어요',
         tone: 'info',
-        action: {
-          label: '되돌리기',
-          onClick: () => insertTask(snapshot, queueIndex),
-        },
+        ...(isActiveCurrent
+          ? {}
+          : {
+              action: {
+                label: '되돌리기',
+                onClick: () => insertTask(snapshot, queueIndex),
+              },
+            }),
       });
     }, REMOVE_ANIM_MS);
+  };
+
+  const handleRemove = () => {
+    if (removing) return;
+    if (isActiveCurrent) {
+      setConfirmOpen(true);
+      return;
+    }
+    doRemove();
   };
 
   const style: React.CSSProperties = {
@@ -225,14 +243,9 @@ function TaskRow({
         <span className={styles.dragHandlePlaceholder} aria-hidden />
       )}
 
-      <span
-        className={`${styles.index} ${isCurrent ? styles.indexCurrent : ''}`}
-      >
-        {isCurrent ? '●' : index}
-      </span>
+      {!isCurrent && <span className={styles.index}>{index}</span>}
 
       <div className={styles.rowMain}>
-        {isCurrent && <StatusBadge status={status} />}
         {editing ? (
           <input
             ref={inputRef}
@@ -262,35 +275,37 @@ function TaskRow({
         )}
       </div>
 
+      {isCurrent && <StatusBadge status={status} />}
+
       {removable ? (
-        <button
-          type="button"
-          className={styles.removeButton}
-          onClick={handleRemove}
-          aria-label="삭제"
-          disabled={removing}
-        >
-          ×
-        </button>
+        <Tooltip label="삭제" placement="top">
+          <button
+            type="button"
+            className={styles.removeButton}
+            onClick={handleRemove}
+            aria-label="삭제"
+            disabled={removing}
+          >
+            ×
+          </button>
+        </Tooltip>
       ) : (
         <span className={styles.removeButtonPlaceholder} aria-hidden />
       )}
-    </li>
-  );
-}
 
-function BreakPlaceholderRow() {
-  return (
-    <li className={`${styles.row} ${styles.rowCurrent} ${styles.rowBreak}`}>
-      <span className={styles.dragHandlePlaceholder} aria-hidden />
-      <span className={`${styles.index} ${styles.indexCurrent}`}>☕</span>
-      <div className={styles.rowMain}>
-        <span className={`${styles.badge} ${styles.badgeBreak}`}>휴식 중</span>
-        <span className={`${styles.title} ${styles.titleCurrent}`}>
-          잠시 쉬어가세요
-        </span>
-      </div>
-      <span className={styles.removeButtonPlaceholder} aria-hidden />
+      <AlertModal
+        open={confirmOpen}
+        title="현재 작업을 삭제할까요?"
+        description="진행 중이던 세션이 사라져요."
+        confirmLabel="삭제"
+        cancelLabel="취소"
+        tone="danger"
+        onConfirm={() => {
+          setConfirmOpen(false);
+          doRemove();
+        }}
+        onCancel={() => setConfirmOpen(false)}
+      />
     </li>
   );
 }
@@ -309,20 +324,18 @@ function CelebrationRow({ title }: { title: string }) {
   );
 }
 
-interface TaskBoardProps {
-  // 모바일 메인용 컴팩트 변형. 큐를 N개까지만 보여주고 DnD 비활성.
-  compact?: boolean;
-  onShowAll?: () => void;
-}
-
-export function TaskBoard({ compact = false, onShowAll }: TaskBoardProps) {
+export function TaskBoard() {
   const status = useAppStore((s) => s.status);
   const currentTask = useAppStore((s) => s.currentTask);
   const queue = useAppStore((s) => s.queue);
   const reorderAll = useAppStore((s) => s.reorderAll);
+  const clearAllTasks = useAppStore((s) => s.clearAllTasks);
+  const pushToast = useToastStore((s) => s.push);
 
   const isWorkLocked = status === 'running' || status === 'paused';
   const isBreak = status === 'breakRunning' || status === 'break';
+
+  const [clearConfirmOpen, setClearConfirmOpen] = useState(false);
 
   // 세션 종료 축하 애니메이션
   const [celebration, setCelebration] = useState<{
@@ -371,24 +384,62 @@ export function TaskBoard({ compact = false, onShowAll }: TaskBoardProps) {
     reorderAll(String(active.id), String(over.id));
   };
 
-  const visibleQueue = compact ? queue.slice(0, COMPACT_PREVIEW_LIMIT) : queue;
-  const hiddenCount = compact ? Math.max(0, queue.length - visibleQueue.length) : 0;
   const total = queue.length + (currentTask ? 1 : 0);
 
-  // 어떤 항목들이 sortable인지 — break 시엔 currentTask 자리에 placeholder 가 들어가므로 큐만.
+  // 휴식 중에는 currentTask 가 없으므로, 큐 첫 항목을 '대기' 상태로 current 자리에 보여줌.
+  const showUpcomingDuringBreak = isBreak && !currentTask && queue.length > 0;
+  const upcomingTask = showUpcomingDuringBreak ? queue[0]! : null;
+  const restQueue = showUpcomingDuringBreak ? queue.slice(1) : queue;
+
+  // 어떤 항목들이 sortable인지
   const sortableIds: string[] = [];
   if (currentTask && !celebration) sortableIds.push(currentTask.id);
-  for (const t of visibleQueue) sortableIds.push(t.id);
+  if (upcomingTask) sortableIds.push(upcomingTask.id);
+  for (const t of restQueue) sortableIds.push(t.id);
 
   // current row drag 가능 여부
-  const currentDraggable = !compact && !!currentTask && !isWorkLocked && !celebration;
-  const queueDraggable = !compact;
+  const currentDraggable = !!currentTask && !isWorkLocked && !celebration;
+  const queueDraggable = true;
+
+  const handleClearAll = () => {
+    const snapshot = {
+      currentTask,
+      queue,
+    };
+    clearAllTasks();
+    setClearConfirmOpen(false);
+    pushToast({
+      message: '모든 할 일을 삭제했어요',
+      tone: 'info',
+      action: {
+        label: '되돌리기',
+        onClick: () => {
+          // 진행 중이던 타이머 상태는 복구하지 않음 — idle 로 둠.
+          useAppStore.setState({
+            currentTask: snapshot.currentTask,
+            queue: snapshot.queue,
+          });
+        },
+      },
+    });
+  };
 
   return (
     <section className={styles.card} aria-label="할 일">
       <header className={styles.header}>
         <h2 className={styles.title}>할 일</h2>
-        {total > 0 && <span className={styles.count}>{total}</span>}
+        <div className={styles.headerRight}>
+          {total > 0 && <span className={styles.count}>{total}</span>}
+          {total > 0 && (
+            <button
+              type="button"
+              className={styles.clearAllButton}
+              onClick={() => setClearConfirmOpen(true)}
+            >
+              모두 삭제
+            </button>
+          )}
+        </div>
       </header>
 
       <TaskAddInput />
@@ -412,13 +463,21 @@ export function TaskBoard({ compact = false, onShowAll }: TaskBoardProps) {
                 index={0}
                 status={status}
                 draggable={currentDraggable}
-                removable={false}
+                removable
               />
-            ) : isBreak ? (
-              <BreakPlaceholderRow />
+            ) : upcomingTask ? (
+              <TaskRow
+                key={upcomingTask.id}
+                task={upcomingTask}
+                isCurrent
+                index={0}
+                status="idle"
+                draggable={false}
+                removable
+              />
             ) : null}
 
-            {visibleQueue.map((task, i) => (
+            {restQueue.map((task, i) => (
               <TaskRow
                 key={task.id}
                 task={task}
@@ -431,7 +490,7 @@ export function TaskBoard({ compact = false, onShowAll }: TaskBoardProps) {
             ))}
 
             {!currentTask &&
-              !isBreak &&
+              !upcomingTask &&
               queue.length === 0 &&
               !celebration && (
                 <li className={styles.empty}>할 일을 추가해 보세요</li>
@@ -440,28 +499,21 @@ export function TaskBoard({ compact = false, onShowAll }: TaskBoardProps) {
         </SortableContext>
       </DndContext>
 
-      {hiddenCount > 0 && onShowAll && (
-        <button
-          type="button"
-          className={styles.showAllButton}
-          onClick={onShowAll}
-        >
-          {hiddenCount}개 더 보기
-        </button>
-      )}
+      <AlertModal
+        open={clearConfirmOpen}
+        title="모든 할 일을 삭제할까요?"
+        description={
+          isWorkLocked
+            ? '진행 중이던 세션도 함께 사라져요.'
+            : '현재 작업과 큐의 모든 항목이 사라져요.'
+        }
+        confirmLabel="모두 삭제"
+        cancelLabel="취소"
+        tone="danger"
+        onConfirm={handleClearAll}
+        onCancel={() => setClearConfirmOpen(false)}
+      />
     </section>
   );
 }
 
-interface ModalProps {
-  open: boolean;
-  onClose: () => void;
-}
-
-export function TaskBoardModal({ open, onClose }: ModalProps) {
-  return (
-    <Modal open={open} onClose={onClose} title="할 일" size="fullscreen">
-      <TaskBoard />
-    </Modal>
-  );
-}

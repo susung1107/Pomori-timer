@@ -1,15 +1,24 @@
 .header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  flex-direction: column;
+  gap: 14px;
   padding: 4px;
+}
+
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
 }
 
 .titleBlock {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 
 .title {
@@ -25,12 +34,29 @@
   font-size: 13px;
   font-weight: 500;
   color: var(--text-tertiary);
+  word-break: keep-all;
+}
+
+@media (max-width: 360px) {
+  .title {
+    font-size: 20px;
+  }
+  .subtitle {
+    font-size: 12px;
+  }
 }
 
 .actions {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .actions {
+    flex-wrap: nowrap;
+  }
 }
 
 .statsButton {
