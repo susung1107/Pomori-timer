@@ -330,16 +330,18 @@ function loadPosts() {
     if (seen.has(post.slug)) throw new Error(`slug 가 중복됩니다: ${post.slug}`)
     seen.add(post.slug)
   }
-  // 최신 글이 위로
-  return posts.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
+  // 최신 글이 위로 (날짜가 같으면 slug 순 — 빌드 결과를 항상 같게)
+  return posts.sort((a, b) => (a.date === b.date ? a.slug.localeCompare(b.slug) : a.date < b.date ? 1 : -1))
 }
 
 function buildPost(post) {
+  const meta = `<p class="postMeta"><time datetime="${post.date}">${formatDate(post.date)}</time></p>`
+  // 본문이 h1 으로 시작하면 그 아래에 날짜를 넣고, 없으면 frontmatter title 로 h1 을 만든다.
+  const article = /^<h1[^>]*>/.test(post.html)
+    ? post.html.replace(/^(<h1[^>]*>[\s\S]*?<\/h1>)/, `$1\n${meta}`)
+    : `<h1>${escapeHtml(post.title)}</h1>\n${meta}\n${post.html}`
   const body = `        <article class="prose">
-${post.html.replace(
-    /^<h1>([\s\S]*?)<\/h1>/,
-    `<h1>$1</h1>\n<p class="postMeta"><time datetime="${post.date}">${formatDate(post.date)}</time></p>`,
-  )}
+${article}
         </article>
 
         ${ctaSection()}`
