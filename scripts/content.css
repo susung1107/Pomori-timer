@@ -1,0 +1,378 @@
+/* === 콘텐츠 페이지(/about, /blog) 전용 스타일 ===
+   토큰과 리셋은 빌드 시 src/index.css 가 이 파일 앞에 붙어 함께 제공된다.
+   (scripts/build-content.mjs 참고) */
+
+.page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-page);
+}
+
+.siteHeader {
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.siteHeaderInner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navLink {
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: background 150ms ease-out, color 150ms ease-out;
+}
+
+.navLink:hover {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.navLink[aria-current='page'] {
+  color: var(--brand);
+}
+
+.themeToggle {
+  appearance: none;
+  border: none;
+  margin-left: 4px;
+  padding: 7px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: background 150ms ease-out, color 150ms ease-out;
+}
+
+.themeToggle:hover {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 36px 20px 56px;
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 24px 16px 40px;
+  }
+}
+
+/* === 본문 타이포그래피 === */
+
+.prose {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.75;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.prose h1 {
+  margin: 0 0 20px;
+  font-size: clamp(26px, 6vw, 32px);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.prose h2 {
+  margin: 44px 0 14px;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.prose h3 {
+  margin: 32px 0 10px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.prose p {
+  margin: 0 0 18px;
+}
+
+.prose ul,
+.prose ol {
+  margin: 0 0 18px;
+  padding-left: 22px;
+}
+
+.prose li {
+  margin-bottom: 10px;
+}
+
+.prose li::marker {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.prose strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.prose a {
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.prose a:hover {
+  text-decoration: underline;
+}
+
+.prose blockquote {
+  margin: 0 0 18px;
+  padding: 2px 0 2px 16px;
+  border-left: 3px solid var(--border-input);
+  color: var(--text-tertiary);
+}
+
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.prose code {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: 0.9em;
+}
+
+.prose pre {
+  margin: 0 0 18px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  overflow-x: auto;
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.prose hr {
+  margin: 32px 0;
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.prose table {
+  width: 100%;
+  margin: 0 0 18px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.prose th,
+.prose td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: left;
+}
+
+.prose th {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* === 글 메타 === */
+
+.postMeta {
+  margin: 0 0 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.pageIntro {
+  margin: 0 0 32px;
+  font-size: 15px;
+  color: var(--text-tertiary);
+  word-break: keep-all;
+}
+
+/* === 글 목록 === */
+
+.postList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.postCard {
+  display: block;
+  padding: 20px;
+  border-radius: 16px;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+}
+
+.postCard:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.postCardTitle {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.postCardDesc {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+.postCardDate {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.empty {
+  padding: 32px 20px;
+  border-radius: 16px;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+/* === CTA === */
+
+.cta {
+  margin-top: 48px;
+  padding: 28px 24px;
+  border-radius: 20px;
+  background: var(--bg-soft-accent);
+  text-align: center;
+}
+
+.ctaTitle {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.ctaDesc {
+  margin: 0 0 18px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  word-break: keep-all;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 28px;
+  border-radius: 14px;
+  background: var(--brand);
+  color: var(--text-on-brand);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 150ms ease-out;
+}
+
+.ctaButton:hover {
+  background: var(--brand-hover);
+}
+
+/* === 푸터 === */
+
+.siteFooter {
+  padding: 24px 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.siteFooter a {
+  color: var(--text-tertiary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.siteFooter a:hover {
+  text-decoration: underline;
+}
+
+/* 라이트에선 달(→다크로 전환), 다크에선 해(→라이트로 전환) 아이콘 */
+.themeToggle .iconSun {
+  display: none;
+}
+
+[data-theme='dark'] .themeToggle .iconSun {
+  display: block;
+}
+
+[data-theme='dark'] .themeToggle .iconMoon {
+  display: none;
+}
